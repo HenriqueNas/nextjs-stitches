@@ -22,8 +22,8 @@ export const {
       gray800: "#202024",
       gray900: "#121214",
 
-      green500: "#00875f",
       green600: "#00b37e",
+      green700: "#00875f",
     },
     fontSizes: {
       sm: "1.125rem",

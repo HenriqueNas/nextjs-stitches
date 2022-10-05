@@ -18,16 +18,10 @@ import { Price, stripe } from "../lib/stripe";
 import Link from "next/link";
 
 interface HomeProps {
-  products: ProductModel[];
+  products: LeanProductModel[];
 }
 
-type ProductModel = {
-  id: string;
-  name: string;
-  price: string;
-  imageUrl: string;
-  description: string;
-};
+type LeanProductModel = Omit<ProductModel, "description" | "priceId">;
 
 export default function Home({ products }: HomeProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,7 +45,7 @@ export default function Home({ products }: HomeProps) {
           <Product className="keen-slider__slide">
             <Image
               src={product.imageUrl}
-              alt={product.description}
+              alt="t-shirt image"
               width={520}
               height={480}
             />
@@ -102,7 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
     expand: ["data.default_price"],
   });
 
-  const products: ProductModel[] = data.map((item) => {
+  const products: LeanProductModel[] = data.map((item) => {
     const price = item.default_price as Price;
     const formattedPrice = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -113,7 +107,6 @@ export const getStaticProps: GetStaticProps = async () => {
       id: item.id,
       name: item.name,
       price: formattedPrice,
-      description: item.description,
       imageUrl: item.images[0],
     };
   });
