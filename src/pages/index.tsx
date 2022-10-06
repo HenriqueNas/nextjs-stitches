@@ -16,6 +16,7 @@ import {
 
 import { Price, stripe } from "../lib/stripe";
 import Link from "next/link";
+import Head from "next/head";
 
 interface HomeProps {
   products: LeanProductModel[];
@@ -39,55 +40,60 @@ export default function Home({ products }: HomeProps) {
   });
 
   return (
-    <HomeContainer ref={sliderRef} className="keen-slider">
-      {products.map((product) => (
-        <Link href={`/product/${product.id}`} key={product.id}>
-          <Product className="keen-slider__slide">
-            <Image
-              src={product.imageUrl}
-              alt="t-shirt image"
-              width={520}
-              height={480}
-            />
+    <>
+      <Head>
+        <title>HOME | Ignite Shop</title>
+      </Head>
+      <HomeContainer ref={sliderRef} className="keen-slider">
+        {products.map((product) => (
+          <Link href={`/product/${product.id}`} key={product.id}>
+            <Product className="keen-slider__slide">
+              <Image
+                src={product.imageUrl}
+                alt="t-shirt image"
+                width={520}
+                height={480}
+              />
 
-            <footer>
-              <strong>{product.name}</strong>
-              <span>{product.price}</span>
-            </footer>
-          </Product>
-        </Link>
-      ))}
+              <footer>
+                <strong>{product.name}</strong>
+                <span>{product.price}</span>
+              </footer>
+            </Product>
+          </Link>
+        ))}
 
-      <>
-        <ArrowButtonWrapper direction={"left"}>
-          <ArrowButton
-            disabled={currentSlide === 0}
-            onClick={(event) => {
-              event.stopPropagation();
-              instanceRef.current?.prev();
-            }}
-          >
-            <CaretLeft size={40} color="white" />
-          </ArrowButton>
-        </ArrowButtonWrapper>
+        <>
+          <ArrowButtonWrapper direction={"left"}>
+            <ArrowButton
+              disabled={currentSlide === 0}
+              onClick={(event) => {
+                event.stopPropagation();
+                instanceRef.current?.prev();
+              }}
+            >
+              <CaretLeft size={40} color="white" />
+            </ArrowButton>
+          </ArrowButtonWrapper>
 
-        <ArrowButtonWrapper direction={"right"}>
-          <ArrowButton
-            disabled={
-              currentSlide ===
-              instanceRef.current?.track?.details?.slides.length - 2
-            }
-            onClick={(event) => {
-              console.log(instanceRef.current);
-              event.stopPropagation();
-              instanceRef.current?.next();
-            }}
-          >
-            <CaretRight size={40} color="white" />
-          </ArrowButton>
-        </ArrowButtonWrapper>
-      </>
-    </HomeContainer>
+          <ArrowButtonWrapper direction={"right"}>
+            <ArrowButton
+              disabled={
+                currentSlide ===
+                instanceRef.current?.track?.details?.slides.length - 2
+              }
+              onClick={(event) => {
+                console.log(instanceRef.current);
+                event.stopPropagation();
+                instanceRef.current?.next();
+              }}
+            >
+              <CaretRight size={40} color="white" />
+            </ArrowButton>
+          </ArrowButtonWrapper>
+        </>
+      </HomeContainer>
+    </>
   );
 }
 

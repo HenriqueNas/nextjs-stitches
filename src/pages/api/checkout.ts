@@ -15,12 +15,12 @@ export default async function handler(
     return res.status(400).json({ error: "Missing priceId parameter." });
   }
 
-  const successUrl = `${process.env.NEXT_URL}/success`;
   const cancelUrl = `${process.env.NEXT_URL}/`;
+  const successUrl = `${process.env.NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`;
 
   const checkout = await stripe.checkout.sessions.create({
-    cancel_url: successUrl,
-    success_url: cancelUrl,
+    cancel_url: cancelUrl,
+    success_url: successUrl,
     mode: "payment",
     line_items: [
       {

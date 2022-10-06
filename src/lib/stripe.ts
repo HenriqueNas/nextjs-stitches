@@ -8,3 +8,5 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 export type Price = Stripe.Price;
+
+export type Product = Stripe.Product;

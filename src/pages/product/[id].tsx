@@ -10,6 +10,7 @@ import {
   ProductDetails,
 } from "../../styles/pages/product";
 import { useState } from "react";
+import Head from "next/head";
 
 interface HomeProps {
   product: ProductModel;
@@ -40,26 +41,31 @@ export default function Product({ product }: HomeProps) {
   }
 
   return (
-    <ProductContainer>
-      <ImageWrapper>
-        <Image
-          src={product.imageUrl}
-          alt="t-shirt image"
-          height={520}
-          width={480}
-        />
-      </ImageWrapper>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
+      <ProductContainer>
+        <ImageWrapper>
+          <Image
+            src={product.imageUrl}
+            alt="t-shirt image"
+            height={520}
+            width={480}
+          />
+        </ImageWrapper>
 
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
-        <p>{product.description}</p>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
+          <p>{product.description}</p>
 
-        <button disabled={isLoadingCheckout} onClick={handleBuyProduct}>
-          Comprar agora
-        </button>
-      </ProductDetails>
-    </ProductContainer>
+          <button disabled={isLoadingCheckout} onClick={handleBuyProduct}>
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   );
 }
 
